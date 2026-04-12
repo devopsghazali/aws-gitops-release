@@ -1,24 +1,41 @@
 # AWS DevSecOps GitOps Release Pipeline
 
-This repo is a complete interview-ready sample for a secure release flow on AWS and Kubernetes.
+This repo is a hands-on DevOps project for learning how code moves from a Git commit to a secure Kubernetes deployment.
 
-## What is inside
+## What you will practice
 
-- A tiny Node.js service with a `/healthz` endpoint
-- A Dockerfile for building the runtime image
-- A Jenkins pipeline for build, test, scan, and publish
-- Kubernetes manifests for deployment and service exposure
-- An Argo CD application manifest for GitOps delivery
-- A verification script for local smoke testing
+- Building a small Node.js service
+- Packaging it with Docker
+- Running a CI pipeline with validation and security checks
+- Updating deployment state through GitOps
+- Explaining the full release flow in an interview
 
-## Flow
+## Tech stack
 
-1. Developer pushes code.
-2. Jenkins runs the pipeline.
-3. Docker image is built and tagged.
-4. Security and manifest checks run.
-5. Kubernetes deployment is updated through GitOps.
-6. Argo CD reconciles the desired state.
+- Node.js
+- Docker
+- Jenkins
+- Kubernetes
+- Argo CD
+
+## Folder guide
+
+- `server.js` is the sample app with `/` and `/healthz`
+- `Dockerfile` builds the runtime image
+- `Jenkinsfile` shows build, validate, scan, and handoff stages
+- `k8s/deployment.yaml` contains the Kubernetes deployment
+- `k8s/service.yaml` exposes the app inside the cluster
+- `gitops/application.yaml` defines the Argo CD application
+- `scripts/verify.sh` is a quick local smoke test
+
+## How the flow works
+
+1. A developer pushes code to GitHub.
+2. Jenkins checks the code and validates the app.
+3. A Docker image is built with a versioned tag.
+4. Security checks run before release.
+5. The GitOps manifest is updated with the approved image tag.
+6. Argo CD syncs the Kubernetes cluster to the desired state.
 
 ## Run locally
 
@@ -27,14 +44,34 @@ npm install
 npm start
 ```
 
-Then open `http://localhost:3000`.
+Open:
 
-## Main files
+```text
+http://localhost:3000
+http://localhost:3000/healthz
+```
 
-- `server.js`
-- `Dockerfile`
-- `Jenkinsfile`
-- `k8s/deployment.yaml`
-- `k8s/service.yaml`
-- `gitops/application.yaml`
-- `scripts/verify.sh`
+## Docker run
+
+```bash
+docker build -t aws-devsecops-gitops-release:local .
+docker run --rm -p 3000:3000 aws-devsecops-gitops-release:local
+```
+
+## Kubernetes idea
+
+Use the deployment and service manifests in `k8s/` to deploy the app in a namespace like `devsecops`.
+
+## Interview talking points
+
+- The app is intentionally small because the focus is on the release pipeline.
+- GitOps keeps deployment state in Git instead of manual cluster changes.
+- Immutable image tags make rollback easier.
+- Readiness and liveness checks help Kubernetes manage the workload safely.
+
+## Practice tasks
+
+- Add a unit test for the health endpoint.
+- Replace the placeholder scan stage with Trivy.
+- Add an ingress object and expose the app through NGINX Ingress.
+- Add environment variables for dev and prod.
