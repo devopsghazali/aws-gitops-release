@@ -1,30 +1,40 @@
 # AWS DevSecOps GitOps Release Pipeline
 
-A compact interview-ready project that shows how code moves from Git to a secure deployment on AWS-backed Kubernetes.
+This repo is a complete interview-ready sample for a secure release flow on AWS and Kubernetes.
 
-## Stack
-- Jenkins
-- Docker
-- SonarQube
-- Trivy
-- Argo CD
-- Kubernetes
-- AWS
+## What is inside
 
-## What this repo covers
-- CI stages for checkout, build, test, and scan
-- Docker image creation with immutable tagging
-- GitOps-style release handoff into Kubernetes
-- Rollback strategy using Git history and tagged releases
+- A tiny Node.js service with a `/healthz` endpoint
+- A Dockerfile for building the runtime image
+- A Jenkins pipeline for build, test, scan, and publish
+- Kubernetes manifests for deployment and service exposure
+- An Argo CD application manifest for GitOps delivery
+- A verification script for local smoke testing
 
-## Interview talking points
-- Security gates happen before the image is published
-- Release state lives in Git, not in manual cluster edits
-- Promotion is repeatable and easy to explain in an interview
+## Flow
 
-## Quick flow
-1. Push code to GitHub.
-2. Jenkins runs build and security checks.
-3. Docker image is published with a release tag.
-4. GitOps manifest is updated with the approved tag.
-5. Argo CD reconciles the Kubernetes deployment.
+1. Developer pushes code.
+2. Jenkins runs the pipeline.
+3. Docker image is built and tagged.
+4. Security and manifest checks run.
+5. Kubernetes deployment is updated through GitOps.
+6. Argo CD reconciles the desired state.
+
+## Run locally
+
+```bash
+npm install
+npm start
+```
+
+Then open `http://localhost:3000`.
+
+## Main files
+
+- `server.js`
+- `Dockerfile`
+- `Jenkinsfile`
+- `k8s/deployment.yaml`
+- `k8s/service.yaml`
+- `gitops/application.yaml`
+- `scripts/verify.sh`
