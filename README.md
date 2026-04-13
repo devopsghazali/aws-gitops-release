@@ -1,4 +1,4 @@
-# AWS DevSecOps GitOps Release Pipeline
+# AWS  GitOps Release Pipeline
 
 This repo is a hands-on DevOps project for learning how code moves from a Git commit to a secure Kubernetes deployment.
 
